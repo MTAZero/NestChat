@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Logger, UseInterceptors, Inject } from '@n
 import { AuthService } from './auth.service';
 import { FileInterceptor } from '@nestjs/platform-express'
 import { TestService } from '../test/test.service';
+import { IlangProcessor } from 'src/interface'
 
 @Controller('auth')
 export class AuthController {
@@ -12,6 +13,9 @@ export class AuthController {
     
     @Inject(AuthService)
     private readonly authService;
+
+    @Inject("ILangProcessor")
+    private readonly langService: IlangProcessor;
 
     @Post("login")
     @UseInterceptors(FileInterceptor('file'))
@@ -26,6 +30,11 @@ export class AuthController {
             return "Login Success"
 
         return "Login Fail"
+    }
+
+    @Get("say-hello")
+    sayHello(): string{
+        return this.langService.sayHello("Bùi Xuân Thuỷ")
     }
 
 }

@@ -1,12 +1,19 @@
 import { Module } from '@nestjs/common';
+import { LangEnService } from '../test/lang-en/lang-en.service';
+import { LangViService } from '../test/lang-vi/lang-vi.service';
 import { TestModule } from '../test/test.module';
-import { TestService } from '../test/test.service';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 
 @Module({
   imports: [TestModule],
   controllers: [AuthController],
-  providers: [AuthService]
+  providers: [
+    {
+      provide: 'ILangProcessor',
+      useClass: LangEnService
+    },
+    AuthService
+  ]
 })
 export class AuthModule {}
