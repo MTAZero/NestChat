@@ -6,9 +6,12 @@ import { TestService } from '../test/test.service';
 @Controller('auth')
 export class AuthController {
     private readonly logger = new Logger(AuthController.name);
+
+    @Inject(TestService)
+    private readonly testService;
     
-    constructor(private authService: AuthService, @Inject(TestService) private readonly testService: TestService){
-    }
+    @Inject(AuthService)
+    private readonly authService;
 
     @Post("login")
     @UseInterceptors(FileInterceptor('file'))
